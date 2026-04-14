@@ -1,0 +1,104 @@
+<IfModule mod_deflate.c>
+  # Compress HTML, CSS, JavaScript, Text, XML and JSON
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/shtml # Seldom used, but fine
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  # JSON is served pre-compressed (.json.gz), no need for on-the-fly compression
+
+  # Optional: You can also compress other text-based font types if serving them directly
+  # AddOutputFilterByType DEFLATE application/x-font-ttf
+  # AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+  # AddOutputFilterByType DEFLATE image/svg+xml # SVG is text-based XML
+
+  # Make sure proxies don't deliver the wrong content
+  <IfModule mod_headers.c>
+    Header append Vary User-Agent env=!dont-vary
+    # More importantly for gzip, tell proxies that content varies by Accept-Encoding
+    Header append Vary Accept-Encoding
+  </IfModule>
+
+  # Optional: Set compression level (default is usually fine, around 6)
+  # DeflateCompressionLevel 9 # 1 (fastest, less compression) to 9 (slowest, best compression)
+
+  # Optional: Set minimum file size to compress to avoid overhead on tiny files
+  # DeflateBufferSize 8096 # Not exactly min size, but related to buffer
+  # There isn't a direct "min file size" for mod_deflate like Nginx's gzip_min_length,
+  # but it's generally efficient enough not to worry for typical web assets.
+  # mod_filter's DeflateMinCompressSize might be what you're looking for if you use mod_filter.
+</IfModule>
+
+# --- CORS for static assets (audio, JSON) served from this domain ---
+<IfModule mod_headers.c>
+  SetEnvIf Origin "^https://swipedict\.github\.io$" CORS_ORIGIN=$0
+  SetEnvIf Origin "^https://app\.swipedict\.com$" CORS_ORIGIN=$0
+  Header always set Access-Control-Allow-Origin "%{CORS_ORIGIN}e" env=CORS_ORIGIN
+  Header always set Access-Control-Allow-Methods "GET, OPTIONS"
+  Header always set Access-Control-Allow-Headers "Content-Type, If-None-Match, If-Modified-Since"
+  Header always set Vary "Origin"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # --- IMPORTANT: Adjust RewriteBase if your app is in a subdirectory ---
+  # If app.swipedict.com directly points to the directory containing this .htaccess
+  # and your index.html, then RewriteBase / is usually correct.
+  # If app.swipedict.com points to a parent directory, and your app is in something like /my-vue-app/
+  # then it should be RewriteBase /my-vue-app/
+  RewriteBase /
+  
+  RewriteRule ^api\.php$ - [L]
+
+  # --- Serve pre-compressed .gz files when available ---
+  RewriteCond %{HTTP:Accept-Encoding} gzip
+  RewriteCond %{REQUEST_FILENAME}.gz -f
+  RewriteRule ^(.+\.json)$ $1.gz [L]
+
+  # --- Rule for serving existing files/directories ---
+  # If the request is for an existing file, serve it directly.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  # If the request is for an existing directory, serve it directly.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L] # Stop processing, serve the file/directory
+
+  # --- Rule for SPA: Route all other requests to index.html ---
+  # This ensures that any path not matching a real file/directory
+  # is handled by your Vue Router.
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# --- Headers for pre-compressed JSON files ---
+<IfModule mod_headers.c>
+  <FilesMatch "\.json\.gz$">
+    Header set Content-Encoding gzip
+    Header set Content-Type "application/json; charset=utf-8"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+  <FilesMatch "\.(html|htm)$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+  ExpiresDefault "access plus 2 days"
+</IfModule>
