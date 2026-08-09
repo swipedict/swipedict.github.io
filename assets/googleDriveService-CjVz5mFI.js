@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-Ca4STLb7.js","assets/index-ClCfRIJK.css"])))=>i.map(i=>d[i]);
+import{_ as t}from"./index-Ca4STLb7.js";const a=!1;async function i(){const{useSettingsStore:o}=await t(async()=>{const{useSettingsStore:e}=await import("./index-Ca4STLb7.js").then(n=>n.aD);return{useSettingsStore:e}},__vite__mapDeps([0,1]));o()}async function s(){throw new Error("Google Drive integration is not configured.")}async function c(){return"no_backup"}export{s as d,c as f,a as i,i as u};
