@@ -1,305 +1,57 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwipeDict — Vocabulary Learning with Swipe</title>
-    <meta name="description" content="Learn vocabulary faster with SwipeDict's intuitive swipe interface, spaced repetition, and rich audio examples. Swipe to learn — it's that simple.">
-    <meta name="theme-color" content="#6366f1">
+
+    <!-- Favicon Links -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#6366f1">
+    <meta name="msapplication-TileColor" content="#6366f1">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#6366f1">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#06061a">
 
-<!-- NAV -->
-<header id="site-header">
-    <nav class="nav-inner">
-        <a href="#top" class="nav-logo" aria-label="SwipeDict Home">
-            <svg class="nav-logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/>
-                <path d="M7 9h6M7 12h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M18 15l-3-3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            SwipeDict
-        </a>
-        <div class="nav-links" id="main-nav">
-            <a href="#how-it-works" class="nav-link">How it works</a>
-            <a href="#features" class="nav-link">Features</a>
-            <a href="https://app.swipedict.com" class="nav-cta">Open App</a>
-        </div>
-        <button id="mobile-menu-button" class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu hidden">
-        <a href="#how-it-works" class="mobile-link">How it works</a>
-        <a href="#features" class="mobile-link">Features</a>
-        <a href="https://app.swipedict.com" class="mobile-cta">Open App</a>
-    </div>
-</header>
+    <!-- Apply saved theme before first paint — prevents flash -->
+    <script>
+      (function(){
+        var t = localStorage.getItem('theme');
+        if (t === 'light') document.documentElement.classList.remove('dark');
+        // default is dark (class already on <html>)
+      })();
+    </script>
 
-<main>
+    <!-- GitHub Pages SPA: restore path from redirect query param -->
+    <script>
+      (function(){
+        var p = window.location.search.match(/[?&]p=([^&]*)/);
+        if (p) {
+          window.history.replaceState(null, null, decodeURIComponent(p[1]) + window.location.hash);
+        }
+      })();
+    </script>
 
-<!-- HERO -->
-<section id="top" class="hero">
-    <div class="hero-bg" aria-hidden="true">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-    <div class="hero-content reveal">
-        <div class="hero-badge">Open Source &middot; Free &middot; No Tracking</div>
-        <h1 class="hero-title">
-            Learn vocabulary<br>
-            <span class="gradient-text">like swiping right.</span>
-        </h1>
-        <p class="hero-sub">
-            Know a word? Swipe it away. New word? Keep it for review.<br>
-            Spaced repetition, native audio, etymology &mdash; all offline-first.
-        </p>
-        <div class="hero-actions">
-            <a href="https://app.swipedict.com" class="btn-primary">Start swiping</a>
-            <a href="#how-it-works" class="btn-ghost">See how it works</a>
-        </div>
-        <p class="hero-hint">Web app &mdash; tap &ldquo;Add to Home Screen&rdquo; for the full experience</p>
-    </div>
-    <div class="hero-visual reveal-right" aria-hidden="true">
-        <div class="preview-card preview-card--back"></div>
-        <div class="preview-card preview-card--mid"></div>
-        <div class="preview-card preview-card--front">
-            <div class="pcard-top">
-                <span class="pcard-lang">RO</span>
-                <span class="pcard-word">a &icirc;nv&#259;&#539;a</span>
-            </div>
-            <div class="pcard-divider"></div>
-            <div class="pcard-bottom">
-                <span class="pcard-lang">DE</span>
-                <span class="pcard-word">lernen</span>
-                <span class="pcard-sub">to learn</span>
-            </div>
-            <div class="pcard-swipe-hint">
-                <span class="hint-left">&#10005; skip</span>
-                <span class="hint-right">keep &#10003;</span>
-            </div>
-        </div>
-    </div>
-</section>
+    <!-- Fonts: Outfit (Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- HOW IT WORKS -->
-<section id="how-it-works" class="section-light">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-eyebrow">Simple by design</span>
-            <h2 class="section-title">Three gestures.<br>One language.</h2>
-        </div>
-        <div class="how-grid">
-            <div class="demo-col reveal">
-                <div id="interactive-card-demo-container" class="interactive-card-demo-container">
-                </div>
-                <p class="demo-hint">&#8592; drag or tap to swipe &#8594;</p>
-            </div>
-            <div class="steps-col">
-                <div class="step reveal">
-                    <div class="step-icon step-icon--keep">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="step-title">Swipe right &mdash; Keep</h3>
-                        <p class="step-desc">New word? Swipe right to add it to your personal review deck.</p>
-                    </div>
-                </div>
-                <div class="step reveal" style="--delay:.1s">
-                    <div class="step-icon step-icon--ignore">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="step-title">Swipe left &mdash; Ignore</h3>
-                        <p class="step-desc">Already know it? Swipe left to skip. Stay focused on new words.</p>
-                    </div>
-                </div>
-                <div class="step reveal" style="--delay:.2s">
-                    <div class="step-icon step-icon--detail">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="step-title">Tap &mdash; Deep dive</h3>
-                        <p class="step-desc">Full examples, native audio, etymology, and personal notes.</p>
-                    </div>
-                </div>
-                <div class="step reveal" style="--delay:.3s">
-                    <div class="step-icon step-icon--srs">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                    </div>
-                    <div>
-                        <h3 class="step-title">SRS &mdash; Smart review</h3>
-                        <p class="step-desc">Spaced Repetition schedules your deck for maximum long-term retention.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ETYMOLOGY SPOTLIGHT -->
-<section id="etymology" class="section-etym">
-    <div class="container">
-        <div class="etym-grid">
-            <div class="etym-text reveal">
-                <span class="section-eyebrow section-eyebrow--amber">Word origins</span>
-                <h2 class="section-title section-title--light">Words have<br>stories. We tell them.</h2>
-                <p class="etym-desc">
-                    Every word in SwipeDict carries its full origin chain &mdash; from ancient Latin roots through Old Romanian into modern usage. Understanding <em>why</em> a word sounds the way it does makes it stick forever.
-                </p>
-                <ul class="etym-bullets">
-                    <li>Latin &amp; Slavic root breakdowns</li>
-                    <li>Historical usage notes</li>
-                    <li>Related words across languages</li>
-                </ul>
-            </div>
-            <div class="etym-card-wrap reveal-right">
-                <div class="etym-mock-card">
-                    <div class="emc-top">
-                        <span class="emc-word">a &#238;nv&#259;&#539;a</span>
-                        <span class="emc-pos">verb &middot; reflexive</span>
-                        <span class="emc-trans">to learn &bull; lernen</span>
-                    </div>
-                    <div class="emc-section">
-                        <span class="emc-label">Etymology</span>
-                        <div class="emc-chain">
-                            <div class="emc-origin">
-                                <span class="emc-lang-tag">Latin</span>
-                                <span class="emc-form">inviti&#257;re</span>
-                                <span class="emc-meaning">&ldquo;to invite, draw in&rdquo;</span>
-                            </div>
-                            <div class="emc-arrow">&#8595;</div>
-                            <div class="emc-origin">
-                                <span class="emc-lang-tag emc-lang-tag--mid">Old Romanian</span>
-                                <span class="emc-form">a &#238;nvi&#539;a</span>
-                                <span class="emc-meaning">&ldquo;to accustom, habituate&rdquo;</span>
-                            </div>
-                            <div class="emc-arrow">&#8595;</div>
-                            <div class="emc-origin emc-origin--current">
-                                <span class="emc-lang-tag emc-lang-tag--now">Romanian</span>
-                                <span class="emc-form">a &#238;nv&#259;&#539;a</span>
-                                <span class="emc-meaning">&ldquo;to learn, to teach&rdquo;</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="emc-section">
-                        <span class="emc-label">Related</span>
-                        <div class="emc-related">
-                            <span class="emc-rel-tag">&#238;nv&#259;&#539;&#259;tor</span>
-                            <span class="emc-rel-tag">&#238;nv&#259;&#539;&#259;m&#226;nt</span>
-                            <span class="emc-rel-tag">deprindere</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features" class="section-dark">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-eyebrow section-eyebrow--light">Everything you need</span>
-            <h2 class="section-title section-title--light">Packed for serious learners.</h2>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card reveal">
-                <div class="fc-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-                </div>
-                <h3 class="fc-title">Curated dictionary</h3>
-                <p class="fc-desc">German&ndash;Romanian with over 2,300 hand-curated words and phrases &mdash; more language pairs to come.</p>
-            </div>
-            <div class="feature-card reveal" style="--delay:.07s">
-                <div class="fc-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                </div>
-                <h3 class="fc-title">Native audio</h3>
-                <p class="fc-desc">High-quality AI voices &mdash; gendered for grammatical accuracy, embedded directly in the dictionary files.</p>
-            </div>
-            <div class="feature-card reveal" style="--delay:.14s">
-                <div class="fc-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-                </div>
-                <h3 class="fc-title">Offline-first PWA</h3>
-                <p class="fc-desc">Install to home screen. Your deck, progress, and notes live on your device &mdash; no account needed.</p>
-            </div>
-            <div class="feature-card reveal" style="--delay:.21s">
-                <div class="fc-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                </div>
-                <h3 class="fc-title">Personal notes</h3>
-                <p class="fc-desc">Add drawings, images, and audio notes to any word. Make it yours.</p>
-            </div>
-            <div class="feature-card reveal" style="--delay:.28s">
-                <div class="fc-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg>
-                </div>
-                <h3 class="fc-title">Progress tracking</h3>
-                <p class="fc-desc">See kept vs ignored. Know exactly how much you&rsquo;ve covered per topic.</p>
-            </div>
-            <div class="feature-card feature-card--etym reveal" style="--delay:.28s">
-                <div class="fc-icon fc-icon--amber">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                </div>
-                <h3 class="fc-title">Deep etymology</h3>
-                <p class="fc-desc">Every word carries its full origin chain &mdash; Latin roots, Slavic borrowings, historical shifts. Know <em>why</em> words sound the way they do.</p>
-            </div>
-            <div class="feature-card reveal" style="--delay:.35s">
-                <div class="fc-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
-                </div>
-                <h3 class="fc-title">Perfect Privacy</h3>
-                <p class="fc-desc">The app is 100% browser-based—no backend involved except for serving the wordlists. Your images, audio files, and notes are stored entirely on your device. Nothing is uploaded or tracked—your data stays with you.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA -->
-<section class="section-cta">
-    <div class="cta-blob" aria-hidden="true"></div>
-    <div class="container">
-        <div class="cta-inner reveal">
-            <h2 class="cta-title">Ready to start swiping?</h2>
-            <p class="cta-sub">Open the web app &mdash; no signup, no install required to try.</p>
-            <a href="https://app.swipedict.com" class="btn-primary btn-primary--large">Start swiping</a>
-        </div>
-    </div>
-</section>
-
-</main>
-
-<!-- FOOTER -->
-<footer class="site-footer">
-    <div class="footer-inner">
-        <span class="footer-brand">&#169; 2026 SwipeDict</span>
-        <div class="footer-links">
-            <a href="/privacy.html" class="footer-link">Privacy</a>
-            <a href="/imprint.html" class="footer-link">Imprint</a>
-            <a href="https://app.swipedict.com" class="footer-link">Open App</a>
-        </div>
-    </div>
-</footer>
-
-<!-- COOKIE BANNER -->
-<div id="cookie-consent-banner" class="cookie-banner hidden" role="dialog" aria-label="Cookie notice">
-    <div class="cookie-inner">
-        <p class="cookie-text">
-            We use local storage to save your preferences. No tracking, no ads.
-            <a href="/privacy.html" class="cookie-link">Privacy Policy</a>
-        </p>
-        <button id="accept-consent-button" class="cookie-btn">Got it</button>
-    </div>
-</div>
-
-<script src="js/main.js" defer></script>
-</body>
+    <!-- iPhone: Dynamic Island / notch / home indicator support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- Apple PWA / Add-to-Home-Screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SwipeDict">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>SwipeDict</title>
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <script type="module" crossorigin src="/assets/index-CezwraT6.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-4vQokcg0.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body>
+    <div id="app"></div>
+  </body>
 </html>
