@@ -214,8 +214,8 @@
                 <div class="fc-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
                 </div>
-                <h3 class="fc-title">Multiple dictionaries</h3>
-                <p class="fc-desc">Romanian&ndash;German, Romanian&ndash;English, and more. Hundreds of curated words and phrases each.</p>
+                <h3 class="fc-title">Curated dictionary</h3>
+                <p class="fc-desc">German&ndash;Romanian with over 2,300 hand-curated words and phrases &mdash; more language pairs to come.</p>
             </div>
             <div class="feature-card reveal" style="--delay:.07s">
                 <div class="fc-icon">
@@ -301,13 +301,5 @@
 </div>
 
 <script src="js/main.js" defer></script>
-<script>
-// This domain used to host the SwipeDict PWA. Unregister any leftover service worker and
-// clear its caches, so returning visitors get this page rather than the stale app shell.
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); });
-  if (window.caches && caches.keys) { caches.keys().then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); }); }
-}
-</script>
 </body>
 </html>
