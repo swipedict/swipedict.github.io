@@ -1,1 +1,1 @@
-﻿// SwipeDict PWA moved to https://app.swipedict.com — no service worker on this domain.
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js', { scope: '/' })})}
