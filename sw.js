@@ -1,1 +1,39 @@
-if(!self.define){let s,e={};const i=(i,r)=>(i=new URL(i+".js",r).href,e[i]||new Promise(e=>{if("document"in self){const s=document.createElement("script");s.src=i,s.onload=e,document.head.appendChild(s)}else s=i,importScripts(i),e()}).then(()=>{let s=e[i];if(!s)throw new Error(`Module ${i} didn’t register its module`);return s}));self.define=(r,l)=>{const n=s||("document"in self?document.currentScript.src:"")||location.href;if(e[n])return;let u={};const o=s=>i(s,n),t={module:{uri:n},exports:u,require:o};e[n]=Promise.all(r.map(s=>t[s]||o(s))).then(s=>(l(...s),u))}}define(["./workbox-9c191d2f"],function(s){"use strict";self.skipWaiting(),s.clientsClaim(),s.precacheAndRoute([{url:"registerSW.js",revision:"1872c500de691dce40960bb85481de07"},{url:"index.html",revision:"da50c5a669a329b7588ffe8015b928ba"},{url:"favicon.ico",revision:"2f803e51ab88aa6f28a13fe8d6ee070b"},{url:"favicon-32x32.png",revision:"d7263f8896b9620f6244a2a819e36308"},{url:"favicon-16x16.png",revision:"2f69e5ab0e1db48476a4d010d2422834"},{url:"cicd.json",revision:"02739805dbf9b2efe6aae023c1b2a5c7"},{url:"apple-touch-icon.png",revision:"dbd8efabf1569c520535ce8302550cef"},{url:"android-chrome-512x512.png",revision:"1bfa4cdf46babd8b8b905715d011ab2a"},{url:"android-chrome-192x192.png",revision:"b305ea1fff5722c1f331f92952cbfe25"},{url:"android-chrome-128x128.png",revision:"66449f45325a9e131f8492b2d6466fbe"},{url:"404.html",revision:"311164f6f393abdaf17b85662fd01218"},{url:"assets/_plugin-vue_export-helper-DlAUqK2U.js",revision:null},{url:"assets/WordListView-BWcoHpXt.css",revision:null},{url:"assets/WordListView-B1_yER2S.js",revision:null},{url:"assets/WelcomeView-7oNEWO-2.js",revision:null},{url:"assets/VersionInfo.vue_vue_type_script_setup_true_lang-D0gCQInb.js",revision:null},{url:"assets/useWordAudio-DTMXykCz.js",revision:null},{url:"assets/useSwipeInteraction-SxpblpTJ.js",revision:null},{url:"assets/UserSettingsView-Cu8f1DI4.js",revision:null},{url:"assets/UserProfileView-D2qzu-MV.js",revision:null},{url:"assets/TopicSelectionView-B_fszGnP.js",revision:null},{url:"assets/SyncStatus-Do0f3MGs.js",revision:null},{url:"assets/SyncStatus-Bq5r9iam.css",revision:null},{url:"assets/SrsProgressView-DfsX4QJT.js",revision:null},{url:"assets/SRSFastReviewView-oMvFg-D8.js",revision:null},{url:"assets/SpeakerWaveIcon-DgExd048.js",revision:null},{url:"assets/RegisterView-BDZqV05I.js",revision:null},{url:"assets/PlusIcon-i8fkhbkc.js",revision:null},{url:"assets/PageWrapper.vue_vue_type_script_setup_true_lang-D9Hf7_gm.js",revision:null},{url:"assets/PageHeader.vue_vue_type_script_setup_true_lang-Di_nqAN3.js",revision:null},{url:"assets/LookupView-CsQLFc7L.js",revision:null},{url:"assets/listViewStore-B7CaYvYf.js",revision:null},{url:"assets/LearningSummaryView-ovXpWUud.css",revision:null},{url:"assets/LearningSummaryView-Bjribxsf.js",revision:null},{url:"assets/InformationCircleIcon-D1bUwaBY.js",revision:null},{url:"assets/index-DLWbIp2D.js",revision:null},{url:"assets/index-ClCfRIJK.css",revision:null},{url:"assets/googleDriveService-D0BFybOw.js",revision:null},{url:"assets/GenericWordListView-DzC7QwAX.css",revision:null},{url:"assets/GenericWordListView-DJ5nEJ4b.js",revision:null},{url:"assets/feedbackService-C50RDXxN.js",revision:null},{url:"assets/ExternalSearchView-UwwIPB9P.css",revision:null},{url:"assets/ExternalSearchView-BWmf3L6P.js",revision:null},{url:"assets/DictionarySelectionView-D0y0N6q6.js",revision:null},{url:"assets/DetailView-_ahKUq7F.js",revision:null},{url:"assets/DetailView-BocO_eLH.css",revision:null},{url:"assets/customMediaStore-CsdpuJfl.js",revision:null},{url:"assets/CollapsibleSection-yc7rJYwG.js",revision:null},{url:"assets/CollapsibleSection-DL8SQvq0.css",revision:null},{url:"assets/ChevronLeftIcon-C0yYPObU.js",revision:null},{url:"assets/captureStore-z3hm3bHC.js",revision:null},{url:"assets/CapturedWordsView-DZPs2BJ5.js",revision:null},{url:"assets/ArrowPathIcon-B3wTLNMq.js",revision:null},{url:"assets/AiImageFactory-fpW--6bD.js",revision:null},{url:"assets/AboutView-BCJmdfYu.js",revision:null},{url:"apple-touch-icon.png",revision:"dbd8efabf1569c520535ce8302550cef"},{url:"favicon.ico",revision:"2f803e51ab88aa6f28a13fe8d6ee070b"},{url:"manifest.webmanifest",revision:"e5e2ff8b4ad854b84dabc10d8b656b54"}],{}),s.cleanupOutdatedCaches(),s.registerRoute(new s.NavigationRoute(s.createHandlerBoundToURL("index.html"),{denylist:[/^\/api/]}))});
+// Tombstone service worker.
+//
+// swipedict.github.io used to serve the SwipeDict PWA, which installed a
+// precaching service worker at this scope. This origin is now only a marketing
+// page, but returning visitors still have that old worker registered and it
+// would keep serving the cached app shell offline-first — they would never see
+// this site at all.
+//
+// A service worker cannot be removed by deleting the file: the browser keeps
+// running the last installed copy. It has to be replaced by one that shuts
+// itself down, which is what this does. Browsers re-fetch the worker script on
+// navigation and install it when the bytes differ, so this is picked up on the
+// next visit.
+//
+// Keep this file until it is safe to assume no client still has the PWA
+// installed. Removing it too early resurrects the old worker for those clients.
+
+self.addEventListener('install', () => {
+    // Take over without waiting for existing tabs to close.
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil((async () => {
+        // Drop every cache the old worker precached the app into.
+        const names = await caches.keys();
+        await Promise.all(names.map(name => caches.delete(name)));
+
+        // Unregister, so nothing is left controlling this scope.
+        await self.registration.unregister();
+
+        // Reload any open tab still under the old worker's control so it picks
+        // up the real page rather than the cached shell it is currently showing.
+        const clients = await self.clients.matchAll({ type: 'window' });
+        for (const client of clients) {
+            client.navigate(client.url);
+        }
+    })());
+});
